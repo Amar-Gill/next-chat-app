@@ -1,7 +1,8 @@
 import React from 'react'
-import { animateScroll } from "react-scroll";
+// import { animateScroll } from "react-scroll";
 import './App.css';
 import Socket from './utils/socket'
+import moment from 'moment';
 
 class MessageContainer extends React.Component {
     constructor(props) {
@@ -17,25 +18,32 @@ class MessageContainer extends React.Component {
         })
     }
 
-    scrollToBottom() {
-        animateScroll.scrollToBottom({
-            containerId: "MessageContainer"
-        });
-    }
+    // scrollToBottom() {
+    //     animateScroll.scrollToBottom({
+    //         containerId: "MessageContainer"
+    //     });
+    // }
 
     componentDidUpdate() {
-        this.scrollToBottom()
+        // this.scrollToBottom()
+        this.end.scrollIntoView()
     }
 
     render() {
         if (!this.state.conversations.length) return (
+            <>
             <div id='MessageContainer' className='MessageContainer'>
 
             </div>
+
+            <div ref={(elem) => {
+                this.end = elem
+                }}></div>
+                </>
         )
         return (
             <div id='MessageContainer' className='MessageContainer'>
-                <ul>
+                
                     {
                         this.state.conversations.map(message => {
                             return (
@@ -43,14 +51,16 @@ class MessageContainer extends React.Component {
 
                                 <img src={`https://api.adorable.io/avatars/25/${message.username}.png`} style={{borderRadius:'50%', marginRight:'4px'}}/>
                                 <span style={{fontWeight: 'bold', marginRight:'4px'}}>{message.username}</span>
-                                {/* <span>{' '}</span> */}
-                                <span>{message.message}</span>
+                                <span style={{marginRight: '4px'}}>{message.message}</span>
+                                <span>{moment(message.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</span>
 
                             </div>
                             )
                         })
                     }
-                </ul>
+                <div ref={(elem) => {
+                    this.end = elem
+                    }}></div>
             </div>
         )
     }
