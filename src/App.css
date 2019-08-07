@@ -1,33 +1,35 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
 .App {
-  text-align: center;
+    position: relative;
+    /* display: flex; */
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
+.MessageContainer {
+     height: 500px;
+     border: solid red;
+     width: 75vw;
+     display: inline-block;
+     position: absolute;
+     overflow-y: scroll;
+    }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+.UsersContainer {
+    height: 500px;
+    width: 25vw;
+    border:solid green;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.NewMessage {
+    position: absolute;
+    top: 557px;
 }

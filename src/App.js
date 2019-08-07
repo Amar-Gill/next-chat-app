@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
+import MessageContainer from './MessageContainer';
+import UsersContainer from './UsersContainer';
+import NewMessage from './NewMessage';
+import Socket from './utils/socket'
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: {}
+    }
+
+    Socket.emit('NEW_USER')
+
+    Socket.on('GET_CURRENT_USER', user => {
+      this.setState({
+        user: user
+      })
+    })
+
+  }
+
+  updateConversations = (object) => {
+    this.setState({
+        conversations: [...this.state.conversations, object]
+        })
+  }
+  
+  render() {
+    return (
+      <div className="App" >
+
+        <h1> Welcome {this.state.user.username}</h1>
+
+        <MessageContainer
+        />
+
+        <UsersContainer/>
+
+        <NewMessage user={this.state.user}/>
+
+      </div>
+    );
+  }
+
 }
 
 export default App;
